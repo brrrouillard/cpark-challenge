@@ -1,20 +1,24 @@
 const mongoose = require("mongoose");
 
 const reportSchema = new mongoose.Schema({
-  type: "Feature",
-  properties: {
-    title: {
-      type: String,
+  title: {
+    type: String,
+    required: true
+  },
+  time: {
+    type: Date,
+    default: Date.now
+  },
+  position: {
+    type: {
+      type: String, 
+      enum: ['Coordinates'], 
       required: true
     },
-    time: {
-      type: Datetime,
-      default: Date.now
+    coordinates: {
+      type: [Number],
+      required: true
     }
-  },
-  geometry: {
-    type: "Point",
-    coordinates: [Number]
   }
 });
 

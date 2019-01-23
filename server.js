@@ -11,7 +11,7 @@ const mongoURI = require("./config/keys").mongoURI;
 // DATABASE CONNEXION
 mongoose
   .connect(
-    db,
+    mongoURI,
     { useNewUrlParser: true }
   )
   .then(() => console.log("Mongoose connected"))
@@ -21,6 +21,9 @@ mongoose
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const reportsRouter = require('./api/reports');
+app.use('/report', reportsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
