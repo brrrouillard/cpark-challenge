@@ -11,8 +11,8 @@ const reportSchema = new mongoose.Schema({
   },
   position: {
     type: {
-      type: String, 
-      enum: ['Coordinates'], 
+      type: String,
+      enum: ["Point"],
       required: true
     },
     coordinates: {
