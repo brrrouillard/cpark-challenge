@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 const PORT = process.env.PORT || 8080;
-const mongoURI = require("./config/keys").mongoURI;
+const mongoURI = process.env.MONGO_URI || require("./config/keys").mongoURI;
 
 // DATABASE CONNEXION
 mongoose
