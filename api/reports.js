@@ -26,8 +26,7 @@ router.get("/:lat/:long", (req, res) => {
       }
     },
     (err, reports) => {
-      console.log(err);
-      console.log(reports);
+      if (err) console.log(err);
       res.status(200).send(reports);
     }
   );
