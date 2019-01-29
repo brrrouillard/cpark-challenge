@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
 
 import Report from "./Report";
 
@@ -10,6 +9,7 @@ export class Reports extends Component {
       key={report._id} 
       report={report} 
       index={index} 
+      userPosition={this.props.userPosition}
       />
     ));
   }

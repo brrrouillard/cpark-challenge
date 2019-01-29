@@ -9,12 +9,14 @@ export class BrowseReportsPage extends Component {
   constructor() {
     super();
     this.state = {
-      //reports: [{ position: { coordinates: [5, 3] } }, { position: { coordinates: [5, 1] } }]
       reports: []
     };
   }
 
   componentDidMount() {
+    console.log(
+      `${apiURL}${this.props.userPosition.lat}/${this.props.userPosition.lon}`
+    );
     fetch(
       `${apiURL}${this.props.userPosition.lat}/${this.props.userPosition.lon}`
     )
@@ -25,16 +27,18 @@ export class BrowseReportsPage extends Component {
       .catch(err => alert(err));
   }
   render() {
-
-    if (this.state.reports.length < 1){
-      return <View><Text>Loading...</Text></View>
+    if (this.state.reports.length < 1) {
+      return (
+        <View>
+          <Text style={styles.test}>Loading...</Text>
+        </View>
+      );
     }
     return (
       <ScrollView style={styles.container}>
-        <Button onPress={this.handleButton.bind(this)} title="Fetch" />
-        <Text style={styles.test}>Lat : {this.props.userPosition.lat}</Text>
-        <Text style={styles.test}>Lon : {this.props.userPosition.lon}</Text>
-        <Reports reportsList={this.state.reports} />
+        <Reports
+          reportsList={this.state.reports}
+        />
       </ScrollView>
     );
   }

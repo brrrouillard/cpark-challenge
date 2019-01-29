@@ -11,43 +11,26 @@ router.get("/", (req, res) => {
 
 // Get all reports around a point in QUERY_DISTANCE distance
 router.get("/:lat/:long", (req, res) => {
-  Report.find(
-    {
-      location: {
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [req.params.long, req.params.lat]
-          },
-          $minDistance: 0,
-          $maxDistance: QUERY_DISTANCE
-        }
-      }
-    },
-    (err, reports) => {
-      if (err) console.log(err);
-      res.status(200).send(reports);
-    });
-
-  /*const reports = Report.aggregate([
+  Report.aggregate([
     {
       $geoNear: {
         near: {
           type: "Point",
-          coordinates: [req.params.long, req.params.lat]
+          coordinates: [parseFloat(req.params.long), parseFloat(req.params.lat)]
         },
         distanceField: "dist.calculated",
         maxDistance: QUERY_DISTANCE,
-        minDistance: 0
+        minDistance: 0,
+        key: "location",
+        spherical: true
       }
     }
   ])
-    .then(res => {
-      console.log(res);
+    .then(data => {
+      res.status(200).send(data);
     })
-    .catch(err => console.log(err));*/
+    .catch(err => console.log(err));
 });
-
 // Add new report
 router.post("/", (req, res) => {
   const newReport = new Report({

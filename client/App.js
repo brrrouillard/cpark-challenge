@@ -15,8 +15,12 @@ export default class App extends React.Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
+      // Get user location on startup
       this.setState({
-        userPosition: { lat: position.coords.latitude, lon: position.coords.longitude }
+        userPosition: {
+          lat: position.coords.latitude,
+          lon: position.coords.longitude
+        }
       });
     });
   }
@@ -25,7 +29,9 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Header />
-        <BrowseReportsPage userPosition={this.state.userPosition} />
+        {this.state.userPosition.lon && (
+          <BrowseReportsPage userPosition={this.state.userPosition} />
+        )}
         <Footer />
       </View>
     );
