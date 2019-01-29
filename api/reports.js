@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 router.get("/:lat/:long", (req, res) => {
   Report.find(
     {
-      position: {
+      location: {
         $near: {
           $geometry: {
             type: "Point",
@@ -27,15 +27,32 @@ router.get("/:lat/:long", (req, res) => {
     (err, reports) => {
       if (err) console.log(err);
       res.status(200).send(reports);
+    });
+
+  /*const reports = Report.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [req.params.long, req.params.lat]
+        },
+        distanceField: "dist.calculated",
+        maxDistance: QUERY_DISTANCE,
+        minDistance: 0
+      }
     }
-  );
+  ])
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log(err));*/
 });
 
 // Add new report
 router.post("/", (req, res) => {
   const newReport = new Report({
     title: req.body.title,
-    position: {
+    location: {
       type: "Point",
       coordinates: [req.body.lon, req.body.lat]
     }

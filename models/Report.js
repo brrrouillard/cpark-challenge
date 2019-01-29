@@ -9,7 +9,7 @@ const reportSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  position: {
+  location: {
     type: {
       type: String,
       enum: ["Point"],

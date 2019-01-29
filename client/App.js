@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import BrowseReports from "./components/BrowseReports";
+import BrowseReportsPage from "./components/Browse/BrowseReportsPage";
 
 export default class App extends React.Component {
   state = {
@@ -25,7 +25,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Header />
-        <BrowseReports userPosition={this.state.userPosition} />
+        <BrowseReportsPage userPosition={this.state.userPosition} />
         <Footer />
       </View>
     );
