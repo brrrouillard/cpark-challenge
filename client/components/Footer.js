@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
 export class Footer extends Component {
+    doNothing(){ // TO CHANGE
+        let x;
+    }
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Browse" style={styles.button}/>
-        <Button title="Add" />
+        <Button title="Browse" style={styles.button} onPress={this.doNothing}/>
+        <Button title="Add" onPress={this.doNothing}/>
       </View>
     );
   }

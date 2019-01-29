@@ -13,6 +13,18 @@ export class BrowseReportsPage extends Component {
     };
   }
 
+  refreshSurroundingPoints = () => {
+    this.props.getUserLocation();
+    fetch(
+      `${apiURL}${this.props.userPosition.lat}/${this.props.userPosition.lon}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ reports: data });
+      })
+      .catch(err => alert(err));
+  }
+
   componentDidMount() {
     console.log(
       `${apiURL}${this.props.userPosition.lat}/${this.props.userPosition.lon}`
@@ -26,6 +38,7 @@ export class BrowseReportsPage extends Component {
       })
       .catch(err => alert(err));
   }
+
   render() {
     if (this.state.reports.length < 1) {
       return (
@@ -36,9 +49,8 @@ export class BrowseReportsPage extends Component {
     }
     return (
       <ScrollView style={styles.container}>
-        <Reports
-          reportsList={this.state.reports}
-        />
+        <Button title="Refresh" onPress={this.refreshSurroundingPoints} />
+        <Reports reportsList={this.state.reports} />
       </ScrollView>
     );
   }

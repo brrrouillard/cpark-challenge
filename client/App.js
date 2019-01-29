@@ -13,9 +13,10 @@ export default class App extends React.Component {
     }
   };
 
-  componentDidMount() {
+  getUserLocation = () => {
     navigator.geolocation.getCurrentPosition(position => {
-      // Get user location on startup
+      console.log("lat : " + position.coords.latitude);
+      console.log("lo : " + position.coords.longitude);
       this.setState({
         userPosition: {
           lat: position.coords.latitude,
@@ -23,6 +24,10 @@ export default class App extends React.Component {
         }
       });
     });
+  };
+
+  componentDidMount() {
+    this.getUserLocation(); // Get user location on startup
   }
 
   render() {
@@ -30,7 +35,10 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <Header />
         {this.state.userPosition.lon && (
-          <BrowseReportsPage userPosition={this.state.userPosition} />
+          <BrowseReportsPage
+            userPosition={this.state.userPosition}
+            getUserLocation={this.getUserLocation}
+          />
         )}
         <Footer />
       </View>

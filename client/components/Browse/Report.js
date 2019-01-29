@@ -9,25 +9,35 @@ export class Report extends Component {
           backgroundColor: this.props.index % 2 == 0 ? "#e0ecec" : "#fff",
           display: "flex",
           flexDirection: "row",
-          alignItems: "center"
+          alignItems: "center",
+          flexWrap: "wrap",
+          padding: 5
         }}
       >
-        <Text>
-          {this.props.report.title}
-          {" : "}
+        <Text style={styles.title}>{this.props.report.title}</Text>
+        <Text style={styles.distance}>
+          {Math.round(this.props.report.dist.calculated * 100) / 100}
+          {"m"}
         </Text>
-        <Text style={styles.text}>
-          {this.props.report.dist.calculated}{" meters away"}
-        </Text>
-        <Text>Hello</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 32
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "65%"
+  },
+  distance: {
+    fontSize: 28,
+    fontWeight: "200",
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: "35%"
   }
 });
 
