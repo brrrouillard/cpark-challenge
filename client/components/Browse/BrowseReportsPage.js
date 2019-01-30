@@ -9,50 +9,64 @@ export class BrowseReportsPage extends Component {
   constructor() {
     super();
     this.state = {
-      reports: []
+      reports: [],
+      userPosition: {
+        lat: null,
+        lon: null
+      },
+      loading: false
     };
   }
 
-  refreshSurroundingPoints = () => {
-    this.props.getUserLocation();
-    fetch(
-      `${apiURL}${this.props.userPosition.lat}/${this.props.userPosition.lon}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ reports: data });
-      })
-      .catch(err => alert(err));
-  }
+  getSurroundingPoints = () => {
+    navigator.geolocation.getCurrentPosition(position => { // First we get user location
+      console.log("lat : " + position.coords.latitude);
+      console.log("lo : " + position.coords.longitude);
+      this.setState(
+        {
+          userPosition: {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude
+          },
+          loading: true
+        },
+        () => { // Then we get surrounding points from the API
+          fetch(
+            `${apiURL}${this.state.userPosition.lat}/${
+              this.state.userPosition.lon
+            }`
+          )
+            .then(res => res.json())
+            .then(data => {
+              console.log("my data", data);
+              this.setState({ reports: data, loading: false });
+            })
+            .catch(err => alert(err));
+        }
+      );
+    });
+  };
 
-  componentDidMount() {
-    console.log(
-      `${apiURL}${this.props.userPosition.lat}/${this.props.userPosition.lon}`
-    );
-    fetch(
-      `${apiURL}${this.props.userPosition.lat}/${this.props.userPosition.lon}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ reports: data });
-      })
-      .catch(err => alert(err));
+  componentWillMount() {
+    this.getSurroundingPoints();
   }
 
   render() {
-    if (this.state.reports.length < 1) {
+    if (this.state.loading) {
       return (
         <View>
           <Text style={styles.test}>Loading...</Text>
         </View>
       );
+    } else {
+      return (
+        <ScrollView style={styles.container}>
+          <Button title="Refresh" onPress={this.getSurroundingPoints} />
+          <Reports reportsList={this.state.reports} />
+          <Text>{this.state.name}</Text>
+        </ScrollView>
+      );
     }
-    return (
-      <ScrollView style={styles.container}>
-        <Button title="Refresh" onPress={this.refreshSurroundingPoints} />
-        <Reports reportsList={this.state.reports} />
-      </ScrollView>
-    );
   }
 }
 
