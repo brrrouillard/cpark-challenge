@@ -22,8 +22,6 @@ export class BrowseReportsPage extends Component {
   getSurroundingPoints = () => {
     navigator.geolocation.getCurrentPosition(position => {
       // First we get user location
-      console.log("lat : " + position.coords.latitude);
-      console.log("lo : " + position.coords.longitude);
       this.setState(
         {
           userPosition: {
@@ -33,7 +31,7 @@ export class BrowseReportsPage extends Component {
           loading: true
         },
         () => {
-          // Then we get surrounding points from the API
+          // We then get surrounding points from the API
           fetch(
             `${apiURL}${this.state.userPosition.lat}/${
               this.state.userPosition.lon
@@ -41,7 +39,6 @@ export class BrowseReportsPage extends Component {
           )
             .then(res => res.json())
             .then(data => {
-              console.log("my data", data);
               this.setState({ reports: data, loading: false });
             })
             .catch(err => alert(err));

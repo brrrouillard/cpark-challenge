@@ -30,14 +30,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: "65%"
+    flexBasis: "65%",
+    color: "#333"
   },
   distance: {
     fontSize: 28,
     fontWeight: "200",
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: "35%"
+    flexBasis: "35%",
+    color: "#333"
   }
 });
 
