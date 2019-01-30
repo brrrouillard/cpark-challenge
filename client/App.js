@@ -1,25 +1,25 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { createBottomTabNavigator, createAppContainer } from "react-navigation";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import BrowseReportsPage from "./components/Browse/BrowseReportsPage";
+import BrowseReportsPage from "./components/BrowseReports/BrowseReportsPage";
+import SubmitReportPage from "./components/SubmitReport/SubmitReportPage";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Header />
-        <BrowseReportsPage />
-        <Footer />
-      </View>
-    );
+const TabNavigator = createBottomTabNavigator(
+  {
+    Browse: BrowseReportsPage,
+    Submit: SubmitReportPage
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: "#fff",
+      activeBackgroundColor: "#17a2b8",
+      inactiveTintColor: "#17a2b8",
+      labelStyle: {
+        fontWeight: "bold",
+        marginBottom: 10,
+        fontSize: 24
+      }
+    }
   }
-}
+);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff"
-  }
-});
+export default createAppContainer(TabNavigator);

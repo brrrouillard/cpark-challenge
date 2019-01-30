@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, ScrollView, View, Text, Button } from "react-native";
 
+import Header from "../Header";
 import Reports from "./Reports";
 
 const apiURL = "https://cpark-reports.herokuapp.com/report/";
@@ -19,7 +20,8 @@ export class BrowseReportsPage extends Component {
   }
 
   getSurroundingPoints = () => {
-    navigator.geolocation.getCurrentPosition(position => { // First we get user location
+    navigator.geolocation.getCurrentPosition(position => {
+      // First we get user location
       console.log("lat : " + position.coords.latitude);
       console.log("lo : " + position.coords.longitude);
       this.setState(
@@ -30,7 +32,8 @@ export class BrowseReportsPage extends Component {
           },
           loading: true
         },
-        () => { // Then we get surrounding points from the API
+        () => {
+          // Then we get surrounding points from the API
           fetch(
             `${apiURL}${this.state.userPosition.lat}/${
               this.state.userPosition.lon
@@ -55,12 +58,14 @@ export class BrowseReportsPage extends Component {
     if (this.state.loading) {
       return (
         <View>
+          <Header />
           <Text style={styles.test}>Loading...</Text>
         </View>
       );
     } else {
       return (
         <ScrollView style={styles.container}>
+          <Header />
           <Button title="Refresh" onPress={this.getSurroundingPoints} />
           <Reports reportsList={this.state.reports} />
           <Text>{this.state.name}</Text>
