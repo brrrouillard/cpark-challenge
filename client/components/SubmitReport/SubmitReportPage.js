@@ -36,12 +36,8 @@ export class SubmitReportPage extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <View
-          style={{
-            display: "flex",
-            alignItems: "center"
-          }}
-        >
+        <View>
+          <Header />
           <Text>Loading...</Text>
         </View>
       );
@@ -49,13 +45,17 @@ export class SubmitReportPage extends Component {
       return (
         <View>
           <Header />
-          <Text style={{
+          <Text
+            style={{
               fontSize: 36,
               textAlign: "center",
               fontWeight: "bold",
-              padding: 10,
+              padding: 5,
               color: "#333"
-          }}>Add a Report</Text>
+            }}
+          >
+            Add a Report
+          </Text>
           <SubmitReportForm userPosition={this.state.userPosition} />
         </View>
       );

@@ -9,15 +9,25 @@ export default class SubmitReportForm extends Component {
     super();
     this.state = {
       style: {
+        // Will be used for animation on input focus
         borderWidth: 1,
         borderRadius: 4
       },
-      text: ""
+      text: "",
+      infoMessage: {
+        value: "",
+        style: {
+          color: "red"
+        }
+      }
     };
   }
 
   handleSubmit = () => {
-    if (this.state.text == "") alert("Enter a valid title");
+    if (this.state.text == "")
+      this.setState({
+        infoMessage: { value: "Please enter a valid title", color: "red" }
+      });
     else {
       axios
         .post(apiURL, {
@@ -26,7 +36,10 @@ export default class SubmitReportForm extends Component {
           lon: this.props.userPosition.lon
         })
         .then(response => {
-          this.setState({text: ""});
+          this.setState({
+            infoMessage: { value: "Report submitted!" },
+            text: ""
+          });
         })
         .catch(error => {
           console.log(error);
@@ -37,6 +50,9 @@ export default class SubmitReportForm extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={[styles.infoMessage, this.state.infoMessage.style]}>
+          {this.state.infoMessage.value}
+        </Text>
         <View>
           <TextInput
             style={[styles.text, { borderWidth: 1 }]}
@@ -93,5 +109,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     borderColor: "#17a2b8",
     borderRadius: 4
+  },
+  infoMessage: {
+    textAlign: "center",
+    fontSize: 20,
+    padding: 5,
+    fontWeight: "100"
   }
 });
